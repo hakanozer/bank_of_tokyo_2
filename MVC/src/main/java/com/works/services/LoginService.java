@@ -15,19 +15,23 @@ public class LoginService {
 
     final DB db;
     final HttpServletRequest req;
+    final TinkEncDec tinkEncDec;
 
     public boolean login(Admin admin) {
         boolean status = false;
         try {
-            String sql = "select * from ADMIN where EMAIL = ? and PASSWORD = ?";
+            String sql = "select * from ADMIN where EMAIL = ?";
             PreparedStatement st = db.dataSource().getConnection().prepareStatement(sql);
             st.setString(1, admin.getEmail());
-            st.setString(2, admin.getPassword());
             ResultSet rs = st.executeQuery();
             status = rs.next();
             if (status) {
-                admin.setAid( rs.getLong("aid") );
-                req.getSession().setAttribute("admin", admin);
+                String dbPassword = rs.getString("password");
+                String plainPassword = tinkEncDec.decrypt(dbPassword);
+                if ( admin.getPassword().equals(plainPassword) ) {
+                    admin.setAid( rs.getLong("aid") );
+                    req.getSession().setAttribute("admin", admin);
+                }
             }
         }catch (Exception ex) {
             System.err.println("Login Error : " + ex);
