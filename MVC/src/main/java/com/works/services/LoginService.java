@@ -35,5 +35,9 @@ public class LoginService {
         return status;
     }
 
+    public void logout() {
+        req.getSession().removeAttribute("admin");
+    }
+
 
 }

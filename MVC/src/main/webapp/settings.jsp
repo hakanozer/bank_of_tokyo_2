@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <jsp:include page="inc/navbar.jsp"></jsp:include>
-    <h1>Admin Dashboard</h1>
+    <h1>Admin Settings</h1>
 </div>
 </body>
 </html>
