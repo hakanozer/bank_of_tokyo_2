@@ -25,6 +25,7 @@
         <c:out value="${password}"></c:out>
     </c:if>
     <form method="post" action="/login" class="col-sm-4">
+        <input type="hidden" name="token_auth" value="${token}" />
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <input  name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
